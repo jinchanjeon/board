@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="BoardSpace">
+	<typeAlias  alias="egovMap" type="org.egovframe.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="boardVO" type="main.service.BoardVO"/>
+
+
+	<insert id="boardDAO.insertNBoard">
+		INSERT INTO nboard(unq, title, pass, name, content, hits, rdate) 
+			VALUES(nboard_seq.nextval,
+					#title#,
+					#pass#,
+					#name#,
+					#content#,
+					0,
+					sysdate )	
+	</insert>
+	
+	<!-- List > HashMap --> 
+	
+	<select id="boardDAO.selectNBoardList" resultClass="egovMap">
+
+SELECT b.* FROM(
+	SELECT rownum rn, a.* FROM (
+        SELECT 	unq, 
+			   title, 
+			   name, 
+			   hits, 
+			   to_char(rdate, 'yyyy-mm-dd') as rdate
+		FROM 
+			   nboard
+			   
+			   <isNotNull property="searchGubun">
+			   		<isNotNull property="searchText">
+			   			WHERE $searchGubun$ like '%$searchText$%' 
+			   		</isNotNull>
+				</isNotNull>
+		ORDER BY unq DESC) a) b
+WHERE rn >= #startIndex# and rn <![CDATA[ <= ]]> #endIndex#  
+			  
+
+	</select>
+	
+	<!-- #은 암호화가 돼서 콘솔에 안나타나는데
+		$는 암호화 해제됨 -->
+	
+	<select id="boardDAO.selectNBoardTotal" resultClass="java.lang.Integer">
+	SELECT COUNT(*) total FROM nboard
+			<isNotNull property="searchGubun">
+			   		<isNotNull property="searchText">
+			   			WHERE $searchGubun$ like '%$searchText$%' 
+			   		</isNotNull>
+			</isNotNull>
+	</select>
+	
+	<select id="boardDAO.selectNBoardDetail" resultClass="boardVO">
+		SELECT 
+			unq, title, name, content, to_char(rdate,'yyyy-mm-dd')
+		FROM 
+			nboard
+		WHERE 
+			unq= '$unq$'
+	
+	</select>
+	
+	
+	<update id="boardDAO.updateNBoardHits">
+		UPDATE nboard SET hits=hits+1 WHERE unq=#unq#
+	</update>
+	
+	
+	<update id="boardDAO.updateNBoard">
+		UPDATE nboard SET title = #title#,
+							name=#name#,
+							content=#content# 
+					WHERE unq=#unq#
+	</update>
+	
+	
+	<select id="boardDAO.selectNBoardPass" resultClass="java.lang.Integer">
+		SELECT COUNT(*) FROM nboard WHERE unq=#unq# AND pass=#pass# 
+	</select>
+	
+	
+	
+	<delete id="boardDAO.deleteNBoard">
+		DELETE FROM nboard WHERE unq=#unq# AND pass=#pass#
+	
+	
+	</delete>
+	
+</sqlMap>
