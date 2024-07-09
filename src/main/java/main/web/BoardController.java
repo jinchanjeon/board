@@ -26,7 +26,7 @@ public class BoardController {
 		return "board/boardWrite";
 	}
 	
-	@RequestMapping("/boardWriteSave.do")
+	@RequestMapping("/board/boardWriteSave.do")
 	@ResponseBody
 	
 	public String insertNBoard(BoardVO vo) throws Exception{
@@ -41,7 +41,7 @@ public class BoardController {
 		
 	}
 	
-	@RequestMapping("/boardList.do")
+	@RequestMapping("/board/boardList.do")
 	public String selectNBoardList(BoardVO vo, ModelMap model) throws Exception{
 		int unit = 10;
 		
@@ -89,7 +89,7 @@ public class BoardController {
 		return "board/boardList";
 	}
 	
-	@RequestMapping("/boardDetail.do")
+	@RequestMapping("board/boardDetail.do")
 	public String selectNBoardDetail(BoardVO vo, ModelMap model) throws Exception{
 		
 		/*
@@ -111,7 +111,7 @@ public class BoardController {
 		
 	}
 	
-	@RequestMapping("/boardModifyWrite.do")
+	@RequestMapping("board/boardModifyWrite.do")
 	public String selectNBoardModifyWrite(BoardVO vo, ModelMap model) throws Exception{
 		BoardVO boardVO = boardService.selectNBoardDetail(vo.getUnq());
 		model.addAttribute("boardVO",boardVO);
@@ -119,7 +119,7 @@ public class BoardController {
 		return "board/boardModifyWrite";
 	}
 	
-	@RequestMapping("/boardModifySave.do")
+	@RequestMapping("/board/boardModifySave.do")
 	@ResponseBody
 	public String updateNBoard(BoardVO vo) throws Exception{
 		
@@ -148,7 +148,7 @@ public class BoardController {
 		return "board/passWrite";
 	}
 	
-	@RequestMapping("/boardDelete.do")
+	@RequestMapping("board/boardDelete.do")
 	@ResponseBody
 	public String deleteBoard(BoardVO vo) throws Exception{
 		

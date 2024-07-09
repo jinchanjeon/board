@@ -77,7 +77,7 @@ th, td{
 <div class="div2">
 
 
-<form name="searchFrm" method="post" action="boardList.do">
+<form name="searchFrm" method="post" action="/myproject2/board/boardList.do">
 	<select name="searchGubun" id="searchGubun">
 		<option value="title">제목</option>
 		<option value="name">글쓴이</option>
@@ -109,7 +109,7 @@ th, td{
 	<tr align="center">
 		<td><c:out value="${cnt }"/></td>
 		<td align="left">
-			<a href="boardDetail.do?unq=${result.unq}"></a><c:out value="${result.title }"/></a>
+			<a href="boardDetail.do?unq=${result.unq}"><c:out value="${result.title }"/></a>
 		</td>
 		<td><c:out value="${result.name }"/></td>
 		<td><c:out value="${result.rdate }"/></td>
@@ -129,7 +129,7 @@ th, td{
 </div>
 
 <div style="width:600px; margin-top:5px; text-align:right;">
-	<button type="button" onclick="location='boardWrite.do'">글쓰기</button>
+	<button type="button" onclick="location='boardWrite.jsp'">글쓰기</button>
 </div>
 
 

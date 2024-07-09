@@ -88,7 +88,7 @@ function fn_submit(){
 		success:function(data){ //controller -> ok, fail
 			if(data=="ok"){
 				alert("저장완료");
-				location="/boardList.do";
+				location="/board/boardList.do";
 			}
 			else{
 				alert("저장실패");

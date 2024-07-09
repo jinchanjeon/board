@@ -42,7 +42,7 @@
 	    		success:function(data){ //controller -> ok, fail
 	    			if(data=="ok"){
 	    				alert(userid+"님 로그인 되었습니다.");
-	    				location="/myproject2/boardList.do";
+	    				location="/myproject2/board/boardList.do";
 	    				
 	    			}
 	    			else{
